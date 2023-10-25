@@ -20,11 +20,12 @@ seqs <- readDNAStringSet("M2_seqs.fa", "extdata", format="fasta")
 
 seqs
 
-lines <- readLines(seqs, 1)
+alignment <- msa(seqs)
 
-alignment <- msa(lines)
+alignment 
 
 print(alignment, show="complete")
 
+msaPrettyPrint(alignment, output="pdf", showNames = "True")
 
 
