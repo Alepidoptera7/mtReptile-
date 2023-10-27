@@ -1,15 +1,18 @@
 #ensure that the msa bioconductor package is installed. 
-
-if (!requireNamespace("BiocManager", quietly=TRUE))
+if (!requireNamespace("BiocManager", quietly=TRUE)){
   install.packages("BiocManager")
+  library(Biostrings)
+}
 
-system.file("tex", "texshade.sty", package = "msa")
+if(!require('msa')){
+  install.packages('msa')
+  library('msa')
+}
+
+system.file("tex", "texshade.sty", package="msa")
 
 BiocManager::install("msa")
 BiocManager::install("Biostrings")
-
-library(msa)
-library(Biostrings)
 
 #check that requsite files extis
 #for m1 use 30, for m2 use 29
@@ -39,9 +42,12 @@ for(s in names(seqs)) writeXStringSet(seqs[s], paste0(s, ".fa"))
 
 #performing CLUSTAL on each seq against the reference genome.
 for(s in names(seqs)){
-alignment <- msa(seqs[s], ref, "ClustalOmega")
+alignment <- msa(seqs[s], ref, method="ClustalOmega")
 alignment 
 }
+
 print(alignment, show="complete")
-msaPrettyPrint(alignment, output="tex", showNames = "none", verbose=FALSE, askForOverwrite = FALSE)
+msaPrettyPrint(alignment, output="tex", showNames = "none", verbose=FALSE, askForOverwrite = FALSE, showLogo="none")
+tools::texi2pdf("alignment.tex", texinputs=system.file("tex", package="msa"),clean=TRUE)
+
 
