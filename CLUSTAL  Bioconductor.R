@@ -49,5 +49,3 @@ alignment
 print(alignment, show="complete")
 msaPrettyPrint(alignment, output="tex", showNames = "none", verbose=FALSE, askForOverwrite = FALSE, showLogo="none")
 tools::texi2pdf("alignment.tex", texinputs=system.file("tex", package="msa"),clean=TRUE)
-
-
