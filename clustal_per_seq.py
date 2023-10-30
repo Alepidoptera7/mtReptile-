@@ -3,6 +3,7 @@ from Bio import AlignIO
 from Bio import SeqIO
 from Bio.Align.Applications import ClustalOmegaCommandline
 from Bio import pairwise2
+import subprocess
 
 class clustal_per_seq:
 
@@ -38,13 +39,21 @@ class clustal_per_seq:
             for line in reference_list:
                 new_file.write(line)
 
-            self.biopython_clustalw(new_file_name)
+            cline = self.biopython_clustalw(new_file_name)
+            self.sub_process(cline)
+            print(cline)
 
     def biopython_clustalw(self, infile):
         clustalOmega_exe = r"C:/Users/Quin The Conquoror!/Desktop/clustal-omega-1.2.2-win64/clustalo"
         outfile = infile + "_aligned"
         cline = ClustalOmegaCommandline(clustalOmega_exe, infile=infile, verbose=True, outfile=outfile, outfmt="fasta")
-        print("./"+str(cline))
+        #full_cline = "./"+str(cline)
+
+        return str(cline)
+
+    def sub_process(self, cline):
+        subprocess.run(cline)
+
 
 
     def driver(self):
